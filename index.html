@@ -32,6 +32,34 @@
     <script src="build/js/main.js"></script>
     <script src = 'build/js/world.js'></script>
 
+    <script id="vertexShader" type="x-shader/x-vertex">
+
+      varying vec2 vUv;
+
+      void main() {
+        vUv = uv;
+        vec4 mvPosition = modelViewMatrix * vec4 ( position, 1.0);
+        gl_Position = projectionMatrix * mvPosition;
+
+      }
+
+    </script>
+
+    <!-- pass through fragment shader -->
+    <script id="fragmentShader" type="x-shader/x-fragment">
+
+      uniform int count;
+
+      varying vec2 vUv;
+
+      void main( void ) {
+ 
+
+        gl_FragColor = vec4( 1.0, 0, 1.0, 1.0 );
+
+      }
+    </script>
+
     
 
     <div class= 'infoButton'>

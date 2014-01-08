@@ -28,6 +28,18 @@ FW.World = class World
     light = new THREE.DirectionalLight 0xff00ff, 2
     FW.scene.add light
 
+    #WIZARD PAINTING
+    @uniforms = 
+      count: type: "i", value: 1
+
+    vertexShader = document.getElementById( 'vertexShader' ).textContent
+    fragmentShader = document.getElementById( 'fragmentShader' ).textContent 
+    shaderMat = new THREE.ShaderMaterial uniforms: @uniforms, vertexShader: vertexShader, fragmentShader: fragmentShader
+    wizardGeo = new THREE.PlaneGeometry 100, 100
+    wizardMesh = new THREE.Mesh(wizardGeo, shaderMat)
+    wizardMesh.scale.set 1000, 1000, 1000
+    FW.scene.add wizardMesh
+
     #WATER
     waterNormals = new THREE.ImageUtils.loadTexture './assets/waternormals.jpg'
     waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping
@@ -67,6 +79,8 @@ FW.World = class World
     @controls.update()
     @render()
   render : ->
+    delta = FW.clock.getDelta()
+    @uniforms.count.value++
     @water.render()
     FW.Renderer.render( FW.scene, FW.camera );
 

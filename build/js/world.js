@@ -5,7 +5,7 @@
   FW.World = World = (function() {
     function World() {
       this.animate = __bind(this.animate, this);
-      var aMeshMirror, light, waterNormals,
+      var aMeshMirror, fragmentShader, light, shaderMat, vertexShader, waterNormals, wizardGeo, wizardMesh,
         _this = this;
       FW.clock = new THREE.Clock();
       this.SCREEN_WIDTH = window.innerWidth;
@@ -21,6 +21,23 @@
       document.body.appendChild(FW.Renderer.domElement);
       light = new THREE.DirectionalLight(0xff00ff, 2);
       FW.scene.add(light);
+      this.uniforms = {
+        count: {
+          type: "i",
+          value: 1
+        }
+      };
+      vertexShader = document.getElementById('vertexShader').textContent;
+      fragmentShader = document.getElementById('fragmentShader').textContent;
+      shaderMat = new THREE.ShaderMaterial({
+        uniforms: this.uniforms,
+        vertexShader: vertexShader,
+        fragmentShader: fragmentShader
+      });
+      wizardGeo = new THREE.PlaneGeometry(100, 100);
+      wizardMesh = new THREE.Mesh(wizardGeo, shaderMat);
+      wizardMesh.scale.set(1000, 1000, 1000);
+      FW.scene.add(wizardMesh);
       waterNormals = new THREE.ImageUtils.loadTexture('./assets/waternormals.jpg');
       waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
       this.water = new THREE.Water(FW.Renderer, FW.camera, FW.scene, {
@@ -58,6 +75,9 @@
     };
 
     World.prototype.render = function() {
+      var delta;
+      delta = FW.clock.getDelta();
+      this.uniforms.count.value++;
       this.water.render();
       return FW.Renderer.render(FW.scene, FW.camera);
     };

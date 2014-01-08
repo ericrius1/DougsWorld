@@ -30,14 +30,14 @@ FW.World = class World
 
     #WIZARD PAINTING
     @uniforms = 
-      count: type: "i", value: 1
+      count: type: "f", value: 1.0
 
     vertexShader = document.getElementById( 'vertexShader' ).textContent
     fragmentShader = document.getElementById( 'fragmentShader' ).textContent 
     shaderMat = new THREE.ShaderMaterial uniforms: @uniforms, vertexShader: vertexShader, fragmentShader: fragmentShader
     wizardGeo = new THREE.PlaneGeometry 100, 100
     wizardMesh = new THREE.Mesh(wizardGeo, shaderMat)
-    wizardMesh.scale.set 1000, 1000, 1000
+    wizardMesh.scale.set 100, 100, 100
     FW.scene.add wizardMesh
 
     #WATER

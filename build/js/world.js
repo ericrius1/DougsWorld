@@ -5,7 +5,7 @@
   FW.World = World = (function() {
     function World() {
       this.animate = __bind(this.animate, this);
-      var light1, light2,
+      var aMeshMirror, light1, light2, waterNormals,
         _this = this;
       FW.clock = new THREE.Clock();
       this.SCREEN_WIDTH = window.innerWidth;
@@ -13,19 +13,32 @@
       this.camFar = 200000;
       FW.width = 10000;
       FW.camera = new THREE.PerspectiveCamera(45.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, this.camFar);
-      FW.camera.position.set(0, 10, 2750);
+      FW.camera.position.set(0, 10, 2000);
       this.controls = new THREE.OrbitControls(FW.camera);
       FW.scene = new THREE.Scene();
       FW.Renderer = new THREE.WebGLRenderer();
       FW.Renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
       document.body.appendChild(FW.Renderer.domElement);
-      light1 = new THREE.DirectionalLight(0xffffff, 0.5);
+      light1 = new THREE.DirectionalLight(0xffffff, 1.0);
       light1.position.set(1, 1, 1);
       FW.scene.add(light1);
-      light2 = new THREE.DirectionalLight(0xffffff, 1.5);
-      light2.position.set(0, -1, 0);
+      light2 = new THREE.DirectionalLight(0xffffff, 1.0);
+      light2.position.set(0, -1, -1);
       FW.scene.add(light2);
-      this.generateNodes();
+      this.dougsShit = new FW.DougsShit();
+      waterNormals = new THREE.ImageUtils.loadTexture('./assets/waternormals.jpg');
+      waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
+      this.water = new THREE.Water(FW.Renderer, FW.camera, FW.scene, {
+        textureWidth: 512,
+        textureHeight: 512,
+        waterNormals: waterNormals,
+        alpha: 1.0,
+        distortionScale: 20
+      });
+      aMeshMirror = new THREE.Mesh(new THREE.PlaneGeometry(FW.width, FW.width, 50, 50), this.water.material);
+      aMeshMirror.add(this.water);
+      aMeshMirror.rotation.x = -Math.PI * 0.5;
+      FW.scene.add(aMeshMirror);
       window.addEventListener("resize", (function() {
         return _this.onWindowResize();
       }), false);
@@ -44,6 +57,7 @@
       requestAnimationFrame(this.animate);
       delta = FW.clock.getDelta();
       time = Date.now();
+      this.water.material.uniforms.time.value += 1.0 / 60;
       this.controls.update();
       return this.render();
     };
@@ -51,21 +65,8 @@
     World.prototype.render = function() {
       var delta;
       delta = FW.clock.getDelta();
+      this.water.render();
       return FW.Renderer.render(FW.scene, FW.camera);
-    };
-
-    World.prototype.generateNodes = function() {
-      var circleGeo, circleMat, circleMesh, dougsCrazyShit, i, numCircles, _i;
-      dougsCrazyShit = new THREE.Geometry;
-      numCircles = 100;
-      circleGeo = new THREE.CircleGeometry(1);
-      circleMat = new THREE.MeshBasicMaterial();
-      for (i = _i = 0; 0 <= numCircles ? _i < numCircles : _i > numCircles; i = 0 <= numCircles ? ++_i : --_i) {
-        circleMesh = new THREE.Mesh(circleGeo);
-        circleMesh.position.set(rnd(-1000, 1000), rnd(-1000, 1000), 0);
-        THREE.GeometryUtils.merge(dougsCrazyShit, circleMesh);
-      }
-      return FW.scene.add(new THREE.Mesh(dougsCrazyShit, new THREE.MeshBasicMaterial()));
     };
 
     return World;

@@ -30,39 +30,8 @@
     <script src="lib/utils.js"></script>
 
     <script src="build/js/main.js"></script>
+    <script src="build/js/dougs-crazy-shit.js"></script>
     <script src = 'build/js/world.js'></script>
-
-    <script id="vertexShader" type="x-shader/x-vertex">
-
-      varying vec2 vUv;
-
-      void main() {
-        vUv = uv;
-        vec4 mvPosition = modelViewMatrix * vec4 ( position, 1.0);
-        gl_Position = projectionMatrix * mvPosition;
-
-      }
-
-    </script>
-
-    <!-- pass through fragment shader -->
-    <script id="fragmentShader" type="x-shader/x-fragment">
-
-
-      varying vec2 vUv;
-      uniform float count;
-
-      void main( void ) {
- 
-      float r = sin(count);
-      float g = cos(count/2.0);
-      float b = tan(count);
-        
-        gl_FragColor = vec4( r, g, b, 1.0 );
-
-      }
-    </script>
-
     
 
     <div class= 'infoButton'>

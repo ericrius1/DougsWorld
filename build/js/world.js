@@ -11,11 +11,14 @@
       this.SCREEN_WIDTH = window.innerWidth;
       this.SCREEN_HEIGHT = window.innerHeight;
       this.camFar = 200000;
-      FW.width = 10000;
-      FW.camera = new THREE.PerspectiveCamera(45.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, this.camFar);
-      FW.camera.position.set(0, 10, 2000);
-      this.controls = new THREE.OrbitControls(FW.camera);
+      FW.width = 100000;
+      this.time = Date.now();
+      this.height = 400;
+      FW.camera = new THREE.PerspectiveCamera(75.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, this.camFar);
+      FW.camera.position.y = this.height;
       FW.scene = new THREE.Scene();
+      this.controls = new FW.Controls(FW.camera);
+      FW.scene.add(FW.controls.getObject());
       FW.Renderer = new THREE.WebGLRenderer();
       FW.Renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
       document.body.appendChild(FW.Renderer.domElement);
@@ -58,7 +61,8 @@
       delta = FW.clock.getDelta();
       time = Date.now();
       this.water.material.uniforms.time.value += 1.0 / 60;
-      this.controls.update();
+      FW.controls.update(Date.now() - this.time);
+      this.time = Date.now();
       return this.render();
     };
 

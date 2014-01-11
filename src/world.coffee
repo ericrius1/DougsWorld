@@ -5,17 +5,20 @@ FW.World = class World
     @SCREEN_WIDTH = window.innerWidth
     @SCREEN_HEIGHT = window.innerHeight
     @camFar = 200000
-    FW.width = 10000
+    FW.width = 100000
+    @time = Date.now()
+    @height = 400
 
     # CAMERA
-    FW.camera = new THREE.PerspectiveCamera(45.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 1, @camFar)
-    FW.camera.position.set  0, 10, 2000
-    
-    #CONTROLS
-    @controls = new THREE.OrbitControls(FW.camera)
-
+    FW.camera = new THREE.PerspectiveCamera(75.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 1, @camFar)
+    FW.camera.position.y = @height
+      
     # SCENE 
     FW.scene = new THREE.Scene()
+    #CONTROLS
+    @controls = new FW.Controls(FW.camera)
+    FW.scene.add FW.controls.getObject()
+
 
 
 
@@ -71,7 +74,8 @@ FW.World = class World
     delta = FW.clock.getDelta()
     time = Date.now()
     @water.material.uniforms.time.value += 1.0 / 60
-    @controls.update()
+    FW.controls.update(Date.now() - @time)
+    @time = Date.now()
 
     @render()
   render : ->

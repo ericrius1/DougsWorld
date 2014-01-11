@@ -13,9 +13,7 @@
       this.camFar = 200000;
       FW.width = 100000;
       this.time = Date.now();
-      this.height = 400;
       FW.camera = new THREE.PerspectiveCamera(75.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, this.camFar);
-      FW.camera.position.y = this.height;
       FW.scene = new THREE.Scene();
       this.controls = new FW.Controls(FW.camera);
       FW.scene.add(FW.controls.getObject());

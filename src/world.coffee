@@ -7,12 +7,11 @@ FW.World = class World
     @camFar = 200000
     FW.width = 100000
     @time = Date.now()
-    @height = 400
 
     # CAMERA
     FW.camera = new THREE.PerspectiveCamera(75.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 1, @camFar)
-    FW.camera.position.y = @height
-      
+
+
     # SCENE 
     FW.scene = new THREE.Scene()
     #CONTROLS

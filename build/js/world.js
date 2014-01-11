@@ -5,7 +5,7 @@
   FW.World = World = (function() {
     function World() {
       this.animate = __bind(this.animate, this);
-      var aMeshMirror, light1, light2, waterNormals,
+      var light1, light2,
         _this = this;
       FW.clock = new THREE.Clock();
       this.SCREEN_WIDTH = window.innerWidth;
@@ -26,19 +26,6 @@
       light2.position.set(0, -1, 0);
       FW.scene.add(light2);
       this.generateNodes();
-      waterNormals = new THREE.ImageUtils.loadTexture('./assets/waternormals.jpg');
-      waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
-      this.water = new THREE.Water(FW.Renderer, FW.camera, FW.scene, {
-        textureWidth: 512,
-        textureHeight: 512,
-        waterNormals: waterNormals,
-        alpha: 1.0,
-        distortionScale: 20
-      });
-      aMeshMirror = new THREE.Mesh(new THREE.PlaneGeometry(FW.width, FW.width, 50, 50), this.water.material);
-      aMeshMirror.add(this.water);
-      aMeshMirror.rotation.x = -Math.PI * 0.5;
-      FW.scene.add(aMeshMirror);
       window.addEventListener("resize", (function() {
         return _this.onWindowResize();
       }), false);
@@ -57,7 +44,6 @@
       requestAnimationFrame(this.animate);
       delta = FW.clock.getDelta();
       time = Date.now();
-      this.water.material.uniforms.time.value += 1.0 / 60;
       this.controls.update();
       return this.render();
     };
@@ -65,22 +51,21 @@
     World.prototype.render = function() {
       var delta;
       delta = FW.clock.getDelta();
-      this.water.render();
       return FW.Renderer.render(FW.scene, FW.camera);
     };
 
     World.prototype.generateNodes = function() {
-      var ab, ax, ay, az, bx, byy, bz, cb, chunkSize, color, colors, cx, cy, cz, d, d2, geometry, i, indices, material, mesh, n, n2, normals, nx, ny, nz, offset, offsets, pA, pB, pC, positions, triangles, vx, vy, vz, x, y, z, _i, _j, _k, _ref, _ref1;
-      triangles = 160000;
+      var ab, ax, ay, az, bx, byy, bz, cb, chunkSize, color, colors, cx, cy, cz, d, d2, geometry, i, material, mesh, n, n2, normals, nx, ny, nz, offset, offsets, pA, pB, pC, positions, q, triangles, vx, vy, vz, x, y, z, _i, _j, _k, _ref, _ref1;
+      triangles = 2;
       geometry = new THREE.BufferGeometry();
       geometry.addAttribute('index', Uint16Array, triangles * 3, 1);
       geometry.addAttribute('position', Float32Array, triangles * 3, 3);
       geometry.addAttribute('normal', Float32Array, triangles * 3, 3);
       geometry.addAttribute('color', Float32Array, triangles * 3, 3);
-      chunkSize = 21845;
-      indices = geometry.attributes.index.array;
-      for (i = _i = 0, _ref = indices.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
-        indices[i] = i % (3 * chunkSize);
+      chunkSize = 6;
+      q = geometry.attributes.index.array;
+      for (i = _i = 0, _ref = q.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
+        q[i] = i;
       }
       positions = geometry.attributes.position.array;
       normals = geometry.attributes.normal.array;
@@ -88,7 +73,7 @@
       color = new THREE.Color();
       n = 800;
       n2 = n / 2;
-      d = 1;
+      d = 1000;
       d2 = d / 2;
       pA = new THREE.Vector3();
       pB = new THREE.Vector3();
@@ -96,9 +81,9 @@
       cb = new THREE.Vector3();
       ab = new THREE.Vector3();
       for (i = _j = 0, _ref1 = positions.length; _j < _ref1; i = _j += 9) {
-        x = Math.random() * n - n2;
-        y = Math.random() * n - n2;
-        z = Math.random() * n - n2;
+        x = 0;
+        y = 0;
+        z = 0;
         ax = x + Math.random() * d - d2;
         ay = y + Math.random() * d - d2;
         az = z + Math.random() * d - d2;
@@ -136,9 +121,9 @@
         normals[i + 6] = nx;
         normals[i + 7] = ny;
         normals[i + 8] = nz;
-        vx = (x / n) + 0.5;
-        vy = (y / n) + 0.5;
-        vz = (z / n) + 0.5;
+        vx = (x / n) + 0.9;
+        vy = (y / n) + 0.1;
+        vz = (z / n) + 0.9;
         color.setRGB(vx, vy, vz);
         colors[i] = color.r;
         colors[i + 1] = color.g;

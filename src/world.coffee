@@ -36,22 +36,22 @@ FW.World = class World
     @generateNodes()
 
     #WATER
-    waterNormals = new THREE.ImageUtils.loadTexture './assets/waternormals.jpg'
-    waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping
-    @water = new THREE.Water FW.Renderer, FW.camera, FW.scene,
-      textureWidth: 512
-      textureHeight: 512
-      waterNormals: waterNormals
-      alpha: 1.0
-      distortionScale: 20
+    # waterNormals = new THREE.ImageUtils.loadTexture './assets/waternormals.jpg'
+    # waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping
+    # @water = new THREE.Water FW.Renderer, FW.camera, FW.scene,
+    #   textureWidth: 512
+    #   textureHeight: 512
+    #   waterNormals: waterNormals
+    #   alpha: 1.0
+    #   distortionScale: 20
 
-    aMeshMirror = new THREE.Mesh(
-      new THREE.PlaneGeometry FW.width, FW.width, 50, 50
-      @water.material
-    )
-    aMeshMirror.add @water
-    aMeshMirror.rotation.x = -Math.PI * 0.5
-    FW.scene.add aMeshMirror
+    # aMeshMirror = new THREE.Mesh(
+    #   new THREE.PlaneGeometry FW.width, FW.width, 50, 50
+    #   @water.material
+    # )
+    # aMeshMirror.add @water
+    # aMeshMirror.rotation.x = -Math.PI * 0.5
+    # FW.scene.add aMeshMirror
 
     # EVENTS
     window.addEventListener "resize", (=>
@@ -70,19 +70,19 @@ FW.World = class World
     requestAnimationFrame @animate
     delta = FW.clock.getDelta()
     time = Date.now()
-    @water.material.uniforms.time.value += 1.0 / 60
+    # @water.material.uniforms.time.value += 1.0 / 60
     @controls.update()
     @render()
   render : ->
     delta = FW.clock.getDelta()
-    @water.render()
+    # @water.render()
     FW.Renderer.render( FW.scene, FW.camera );
 
   generateNodes: ->
-    triangles = 160000;
+    triangles = 2;
 
     geometry = new THREE.BufferGeometry();
-
+    #  addAttribute: name, type, numItems, itemSize
     geometry.addAttribute( 'index', Uint16Array, triangles * 3, 1 );
     geometry.addAttribute( 'position', Float32Array, triangles * 3, 3 );
     geometry.addAttribute( 'normal', Float32Array, triangles * 3, 3 );
@@ -90,15 +90,15 @@ FW.World = class World
 
     # # break geometry into
     # # chunks of 21,845 triangles (3 unique vertices per triangle)
-    # # for indices to fit into 16 bit integer number
+    # # for q to fit into 16 bit integer number
     # # floor(2^16 / 3) = 21845
 
-    chunkSize = 21845;
+    chunkSize = 6;
 
-    indices = geometry.attributes.index.array
+    q = geometry.attributes.index.array
 
-    for i in [0...indices.length]
-      indices[ i ] = i % ( 3 * chunkSize )
+    for i in [0...q.length]
+      q[ i ] = i
 
     positions = geometry.attributes.position.array;
     normals = geometry.attributes.normal.array;
@@ -108,7 +108,7 @@ FW.World = class World
 
     n = 800 
     n2 = n/2  # triangles spread in the cube
-    d = 1
+    d = 1000
     d2 = d/2 # individual triangle size
 
     pA = new THREE.Vector3();
@@ -122,9 +122,9 @@ FW.World = class World
 
       # positions
 
-      x = Math.random() * n - n2;
-      y = Math.random() * n - n2;
-      z = Math.random() * n - n2;
+      x = 0
+      y = 0
+      z = 0
 
       ax = x + Math.random() * d - d2;
       ay = y + Math.random() * d - d2;
@@ -180,9 +180,9 @@ FW.World = class World
 
       # colors
 
-      vx = ( x / n ) + 0.5;
-      vy = ( y / n ) + 0.5;
-      vz = ( z / n ) + 0.5;
+      vx = ( x / n ) + 0.9;
+      vy = ( y / n ) + 0.1;
+      vz = ( z / n ) + 0.9;
 
       color.setRGB( vx, vy, vz );
 

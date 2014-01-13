@@ -13,7 +13,7 @@
       this.endRadius = 50;
       this.numLayers = 50;
       this.startSegments = 20;
-      this.endSegments = 200;
+      this.endSegments = 100;
       this.width = 1;
       this.height = 1;
       this.squareGeo = new THREE.PlaneGeometry(1, 1);
@@ -64,13 +64,14 @@
         geoLayer = new THREE.CircleGeometry(this.radius, this.numSegments);
         layerMesh = new THREE.ParticleSystem(geoLayer, this.shaderMaterial);
         layerMesh.position.z = -100;
-        layerMesh.position.y = 40;
+        layerMesh.position.y = 20;
         FW.scene.add(layerMesh);
         layer = {
           mesh: layerMesh,
           rotationSpeed: map(i, 1, this.numLayers, this.startRotationSpeed, this.endRotationSpeed)
         };
-        _results.push(this.dougsCrazyShit.push(layer));
+        this.dougsCrazyShit.push(layer);
+        _results.push(this.placeDoug());
       }
       return _results;
     };
@@ -84,6 +85,18 @@
         _results.push(layer.mesh.rotation.z -= layer.rotationSpeed);
       }
       return _results;
+    };
+
+    DougsShit.prototype.placeDoug = function() {
+      var dougMesh, planeGeo, planeMat;
+      planeGeo = new THREE.PlaneGeometry(10, 10);
+      planeMat = new THREE.MeshBasicMaterial({
+        map: THREE.ImageUtils.loadTexture('assets/doug.jpg')
+      });
+      dougMesh = new THREE.Mesh(planeGeo, planeMat);
+      dougMesh.position.y = 20;
+      dougMesh.position.z = -98;
+      return FW.scene.add(dougMesh);
     };
 
     return DougsShit;

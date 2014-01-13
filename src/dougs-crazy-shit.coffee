@@ -9,7 +9,7 @@ FW.DougsShit = class DougsShit
     @endRadius = 50
     @numLayers = 50
     @startSegments = 20
-    @endSegments = 200
+    @endSegments = 100
     @width = 1
     @height = 1
     @squareGeo = new THREE.PlaneGeometry(1, 1)
@@ -46,12 +46,13 @@ FW.DougsShit = class DougsShit
       geoLayer = new THREE.CircleGeometry @radius, @numSegments
       layerMesh = new THREE.ParticleSystem geoLayer, @shaderMaterial
       layerMesh.position.z = -100
-      layerMesh.position.y = 40
+      layerMesh.position.y = 20
       FW.scene.add layerMesh
       layer = 
         mesh: layerMesh
         rotationSpeed: map(i, 1, @numLayers, @startRotationSpeed, @endRotationSpeed)
       @dougsCrazyShit.push layer
+      @placeDoug()
 
 
 
@@ -59,6 +60,14 @@ FW.DougsShit = class DougsShit
   update: ->
     for layer in @dougsCrazyShit
       layer.mesh.rotation.z -= layer.rotationSpeed 
+
+  placeDoug: ->
+    planeGeo = new THREE.PlaneGeometry(10, 10)
+    planeMat = new THREE.MeshBasicMaterial map:THREE.ImageUtils.loadTexture('assets/doug.jpg')
+    dougMesh = new THREE.Mesh planeGeo, planeMat 
+    dougMesh.position.y = 20
+    dougMesh.position.z = -98
+    FW.scene.add dougMesh
 
 
 

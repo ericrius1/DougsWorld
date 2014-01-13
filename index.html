@@ -37,7 +37,6 @@
 
     <script type="x-shader/x-vertex" id="vertexshader">
 
-    attribute float size;
     attribute vec3 ca;
 
     varying vec3 vColor;
@@ -47,9 +46,6 @@
       vColor = ca;
 
       vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
-
-      gl_PointSize = size;
-      gl_PointSize = size * ( 100.0 / length( mvPosition.xyz ) );
 
       gl_Position = projectionMatrix * mvPosition;
 

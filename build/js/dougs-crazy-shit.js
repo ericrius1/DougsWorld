@@ -5,8 +5,15 @@
     function DougsShit() {
       var attributes, uniforms;
       this.dougsCrazyShit = [];
-      this.rotationSpeed = 0.0005;
+      this.startRotationSpeed = .005;
+      this.endRotationSpeed = .005;
+      this.zRotationStart = 0;
+      this.zRotationEnd = 2 * Math.PI;
+      this.startRadius = 5;
+      this.endRadius = 50;
       this.numLayers = 10;
+      this.startSegments = 10;
+      this.endSegments = 50;
       this.width = 1;
       this.height = 1;
       this.squareGeo = new THREE.PlaneGeometry(1, 1);
@@ -51,29 +58,25 @@
       dougsCrazyGeometry = new THREE.Geometry();
       _results = [];
       for (i = _i = 1, _ref = this.numLayers; 1 <= _ref ? _i <= _ref : _i >= _ref; i = 1 <= _ref ? ++_i : --_i) {
-        geoLayer = new THREE.CircleGeometry(3 * i, 10);
+        console.log('wah');
+        this.radius = map(i, 1, this.numLayers, this.startRadius, this.endRadius);
+        this.numSegments = Math.floor(map(i, 1, this.numLayers, this.startSegments, this.endSegments));
+        geoLayer = new THREE.CircleGeometry(this.radius, this.numSegments);
         layerMesh = new THREE.ParticleSystem(geoLayer, this.shaderMaterial);
-        layerMesh.position.z = -60;
+        layerMesh.position.z = -50;
+        layerMesh.position.y = 40;
+        this.zRotation = map(i, 1, this.numLayers, this.zRotationStart, this.zRotationEnd);
         FW.scene.add(layerMesh);
         layer = {
           mesh: layerMesh,
-          rotationSpeed: this.rotationSpeed * (i * .3)
+          rotationSpeed: map(i, 1, this.numLayers, this.startRotationSpeed, this.endRotationSpeed)
         };
         _results.push(this.dougsCrazyShit.push(layer));
       }
       return _results;
     };
 
-    DougsShit.prototype.update = function() {
-      var layer, _i, _len, _ref, _results;
-      _ref = this.dougsCrazyShit;
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        layer = _ref[_i];
-        _results.push(layer.mesh.rotation.z += layer.rotationSpeed);
-      }
-      return _results;
-    };
+    DougsShit.prototype.update = function() {};
 
     return DougsShit;
 

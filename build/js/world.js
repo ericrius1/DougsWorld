@@ -39,6 +39,7 @@
       aMeshMirror = new THREE.Mesh(new THREE.PlaneGeometry(FW.width, FW.width, 50, 50), this.water.material);
       aMeshMirror.add(this.water);
       aMeshMirror.rotation.x = -Math.PI * 0.5;
+      FW.scene.add(aMeshMirror);
       window.addEventListener("resize", (function() {
         return _this.onWindowResize();
       }), false);

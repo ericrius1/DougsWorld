@@ -1,6 +1,8 @@
 FW.DougsShit = class DougsShit
   constructor: ->
-    @numLayers = 50
+    @dougsCrazyShit = []
+    @rotationSpeed = 0.0005
+    @numLayers = 10
     @width = 1
     @height = 1
     @squareGeo = new THREE.PlaneGeometry(1, 1)
@@ -27,17 +29,23 @@ FW.DougsShit = class DougsShit
       transparent:  true
 
   placeNodes: ->
-    geometry = new THREE.CircleGeometry(50, 100)
+    dougsCrazyGeometry = new THREE.Geometry()
 
+    for i in [1..@numLayers]
+      geoLayer = new THREE.CircleGeometry 3 * i, 10
+      layerMesh = new THREE.ParticleSystem geoLayer, @shaderMaterial
+      layerMesh.position.z = -60
+      FW.scene.add layerMesh
+      layer = 
+        mesh: layerMesh
+        rotationSpeed: @rotationSpeed * ( i * .3)
+      @dougsCrazyShit.push layer
 
-    @dougsCrazyShit = new THREE.ParticleSystem(geometry, @shaderMaterial)
-    @dougsCrazyShit.position.z = -100
-
-    FW.scene.add @dougsCrazyShit
 
 
     
   update: ->
-    @dougsCrazyShit.rotation.x +=.01
+    for layer in @dougsCrazyShit
+      layer.mesh.rotation.z += layer.rotationSpeed 
 
 

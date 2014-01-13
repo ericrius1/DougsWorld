@@ -1,15 +1,15 @@
 FW.DougsShit = class DougsShit
   constructor: ->
     @dougsCrazyShit = []
-    @startRotationSpeed = .005
+    @startRotationSpeed = .02
     @endRotationSpeed = .005
     @zRotationStart = 0
     @zRotationEnd = 2 * Math.PI
     @startRadius = 5
     @endRadius = 50
-    @numLayers = 10
+    @numLayers = 20
     @startSegments = 10
-    @endSegments = 50
+    @endSegments = 100
     @width = 1
     @height = 1
     @squareGeo = new THREE.PlaneGeometry(1, 1)
@@ -44,10 +44,8 @@ FW.DougsShit = class DougsShit
       @numSegments = Math.floor(map(i, 1, @numLayers, @startSegments, @endSegments))
       geoLayer = new THREE.CircleGeometry @radius, @numSegments
       layerMesh = new THREE.ParticleSystem geoLayer, @shaderMaterial
-      layerMesh.position.z = -50
+      layerMesh.position.z = -100
       layerMesh.position.y = 40
-      @zRotation = map(i, 1, @numLayers, @zRotationStart, @zRotationEnd)
-      # layerMesh.rotation.z = @zRotation
       FW.scene.add layerMesh
       layer = 
         mesh: layerMesh
@@ -58,7 +56,7 @@ FW.DougsShit = class DougsShit
 
     
   update: ->
-    # for layer in @dougsCrazyShit
-    #   layer.mesh.rotation.z -= layer.rotationSpeed 
+    for layer in @dougsCrazyShit
+      layer.mesh.rotation.z -= layer.rotationSpeed 
 
 

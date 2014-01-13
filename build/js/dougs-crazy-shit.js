@@ -5,15 +5,15 @@
     function DougsShit() {
       var attributes, uniforms;
       this.dougsCrazyShit = [];
-      this.startRotationSpeed = .005;
+      this.startRotationSpeed = .02;
       this.endRotationSpeed = .005;
       this.zRotationStart = 0;
       this.zRotationEnd = 2 * Math.PI;
       this.startRadius = 5;
       this.endRadius = 50;
-      this.numLayers = 10;
+      this.numLayers = 20;
       this.startSegments = 10;
-      this.endSegments = 50;
+      this.endSegments = 100;
       this.width = 1;
       this.height = 1;
       this.squareGeo = new THREE.PlaneGeometry(1, 1);
@@ -63,9 +63,8 @@
         this.numSegments = Math.floor(map(i, 1, this.numLayers, this.startSegments, this.endSegments));
         geoLayer = new THREE.CircleGeometry(this.radius, this.numSegments);
         layerMesh = new THREE.ParticleSystem(geoLayer, this.shaderMaterial);
-        layerMesh.position.z = -50;
+        layerMesh.position.z = -100;
         layerMesh.position.y = 40;
-        this.zRotation = map(i, 1, this.numLayers, this.zRotationStart, this.zRotationEnd);
         FW.scene.add(layerMesh);
         layer = {
           mesh: layerMesh,
@@ -76,7 +75,16 @@
       return _results;
     };
 
-    DougsShit.prototype.update = function() {};
+    DougsShit.prototype.update = function() {
+      var layer, _i, _len, _ref, _results;
+      _ref = this.dougsCrazyShit;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        layer = _ref[_i];
+        _results.push(layer.mesh.rotation.z -= layer.rotationSpeed);
+      }
+      return _results;
+    };
 
     return DougsShit;
 

@@ -39,7 +39,6 @@
       aMeshMirror = new THREE.Mesh(new THREE.PlaneGeometry(FW.width, FW.width, 50, 50), this.water.material);
       aMeshMirror.add(this.water);
       aMeshMirror.rotation.x = -Math.PI * 0.5;
-      FW.scene.add(aMeshMirror);
       window.addEventListener("resize", (function() {
         return _this.onWindowResize();
       }), false);
@@ -60,6 +59,7 @@
       time = Date.now();
       this.water.material.uniforms.time.value += 1.0 / 60;
       FW.controls.update(Date.now() - this.time);
+      this.dougsShit.update();
       this.time = Date.now();
       return this.render();
     };

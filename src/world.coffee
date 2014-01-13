@@ -53,7 +53,7 @@ FW.World = class World
     )
     aMeshMirror.add @water
     aMeshMirror.rotation.x = -Math.PI * 0.5
-    FW.scene.add aMeshMirror
+    # FW.scene.add aMeshMirror
 
     # EVENTS
     window.addEventListener "resize", (=>
@@ -74,6 +74,7 @@ FW.World = class World
     time = Date.now()
     @water.material.uniforms.time.value += 1.0 / 60
     FW.controls.update(Date.now() - @time)
+    @dougsShit.update()
     @time = Date.now()
 
     @render()

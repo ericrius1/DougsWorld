@@ -3,23 +3,58 @@
 
   FW.DougsShit = DougsShit = (function() {
     function DougsShit() {
-      var circleGeo, circleMat, circleMesh, i, numCircles, _i;
-      this.dougsCrazyGeo = new THREE.Geometry;
-      numCircles = 1000;
-      circleGeo = new THREE.CircleGeometry(10, 100);
-      circleMat = new THREE.MeshBasicMaterial({
-        color: 0xff00ff,
-        side: THREE.DoubleSide
+      var attributes, uniforms;
+      this.numLayers = 50;
+      this.width = 1;
+      this.height = 1;
+      this.squareGeo = new THREE.PlaneGeometry(1, 1);
+      this.materials = [];
+      this.placeNodes();
+      attributes = {
+        size: {
+          type: 'f',
+          value: []
+        },
+        ca: {
+          type: 'c',
+          value: []
+        }
+      };
+      uniforms = {
+        amplitude: {
+          type: "f",
+          value: 1.0
+        },
+        color: {
+          type: "c",
+          value: new THREE.Color(0xffffff)
+        },
+        texture: {
+          type: "t",
+          value: THREE.ImageUtils.loadTexture("assets/square-outline.png")
+        }
+      };
+      uniforms.texture.value.wrapS = uniforms.texture.value.wrapT = THREE.RepeatWrapping;
+      this.shaderMaterial = new THREE.ShaderMaterial({
+        uniforms: uniforms,
+        attributes: attributes,
+        vertexShader: document.getElementById('vertexshader').textContent,
+        fragmentShader: document.getElementById('fragmentshader').textContent,
+        transparent: true
       });
-      for (i = _i = 0; 0 <= numCircles ? _i < numCircles : _i > numCircles; i = 0 <= numCircles ? ++_i : --_i) {
-        circleMesh = new THREE.Mesh(circleGeo, circleMat);
-        circleMesh.DoubleSide = true;
-        circleMesh.position.set(rnd(-500, 500), rnd(0, 1000) + 100, 0);
-        THREE.GeometryUtils.merge(this.dougsCrazyGeo, circleMesh);
-      }
-      this.dougsCrazyShit = new THREE.Mesh(this.dougsCrazyGeo, circleMat);
-      FW.scene.add(this.dougsCrazyShit);
     }
+
+    DougsShit.prototype.placeNodes = function() {
+      var geometry;
+      geometry = new THREE.CircleGeometry(50, 100);
+      this.dougsCrazyShit = new THREE.ParticleSystem(geometry, this.shaderMaterial);
+      this.dougsCrazyShit.position.z = -100;
+      return FW.scene.add(this.dougsCrazyShit);
+    };
+
+    DougsShit.prototype.update = function() {
+      return this.dougsCrazyShit.rotation.x += .01;
+    };
 
     return DougsShit;
 

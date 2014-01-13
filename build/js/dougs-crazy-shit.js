@@ -11,9 +11,9 @@
       this.zRotationEnd = 2 * Math.PI;
       this.startRadius = 5;
       this.endRadius = 50;
-      this.numLayers = 20;
-      this.startSegments = 10;
-      this.endSegments = 100;
+      this.numLayers = 50;
+      this.startSegments = 20;
+      this.endSegments = 200;
       this.width = 1;
       this.height = 1;
       this.squareGeo = new THREE.PlaneGeometry(1, 1);

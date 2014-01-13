@@ -7,9 +7,9 @@ FW.DougsShit = class DougsShit
     @zRotationEnd = 2 * Math.PI
     @startRadius = 5
     @endRadius = 50
-    @numLayers = 20
-    @startSegments = 10
-    @endSegments = 100
+    @numLayers = 50
+    @startSegments = 20
+    @endSegments = 200
     @width = 1
     @height = 1
     @squareGeo = new THREE.PlaneGeometry(1, 1)
@@ -35,6 +35,7 @@ FW.DougsShit = class DougsShit
       fragmentShader: document.getElementById( 'fragmentshader' ).textContent
       transparent:  true
 
+
   placeNodes: ->
     dougsCrazyGeometry = new THREE.Geometry()
 
@@ -58,5 +59,7 @@ FW.DougsShit = class DougsShit
   update: ->
     for layer in @dougsCrazyShit
       layer.mesh.rotation.z -= layer.rotationSpeed 
+
+
 
 

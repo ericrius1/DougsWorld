@@ -12,7 +12,7 @@
       this.zRotationEnd = 2 * Math.PI;
       this.startRadius = 5;
       this.endRadius = 50;
-      this.numLayers = 30;
+      this.numLayers = 100;
       this.startSegments = 20;
       this.endSegments = 50;
       this.width = 1;

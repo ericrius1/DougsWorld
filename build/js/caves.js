@@ -4,9 +4,9 @@
   FW.Caves = Caves = (function() {
     function Caves() {
       var i, parameters, position, terrain, terrainGeo, terrainMaterial, _i, _ref;
-      this.numCaves = 10;
+      this.numCaves = 5;
       this.positions = [];
-      this.caveSpreadFactor = 50;
+      this.caveSpreadFactor = 100;
       parameters = {
         alea: RAND_MT,
         generator: PN_GENERATOR,
@@ -29,7 +29,7 @@
           side: THREE.DoubleSide
         });
         terrain = new THREE.Mesh(terrainGeo, terrainMaterial);
-        position = new THREE.Vector3(rnd(-FW.width / this.caveSpreadFactor, FW.width / this.caveSpreadFactor), 0, rnd(-FW.width / this.caveSpreadFactor, FW.width / this.caveSpreadFactor));
+        position = new THREE.Vector3(rnd(-FW.width / this.caveSpreadFactor, FW.width / this.caveSpreadFactor), -2, rnd(-FW.width / this.caveSpreadFactor, FW.width / this.caveSpreadFactor));
         terrain.position = position;
         this.positions.push(position);
         FW.scene.add(terrain);

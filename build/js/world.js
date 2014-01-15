@@ -35,7 +35,7 @@
         textureHeight: 512,
         waterNormals: waterNormals,
         alpha: 1.0,
-        distortionScale: 20
+        distortionScale: 10
       });
       aMeshMirror = new THREE.Mesh(new THREE.PlaneGeometry(FW.width, FW.width, 50, 50), this.water.material);
       aMeshMirror.add(this.water);

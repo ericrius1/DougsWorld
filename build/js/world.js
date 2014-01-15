@@ -26,7 +26,8 @@
       light2 = new THREE.DirectionalLight(0xffffff, 1.0);
       light2.position.set(0, -1, -1);
       FW.scene.add(light2);
-      this.dougsShit = new FW.DougsShit();
+      this.caves = new FW.Caves();
+      this.dougsShit = new FW.DougsShit(this.caves.positions[0]);
       waterNormals = new THREE.ImageUtils.loadTexture('./assets/waternormals.jpg');
       waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
       this.water = new THREE.Water(FW.Renderer, FW.camera, FW.scene, {

@@ -2,8 +2,9 @@
   var DougsShit;
 
   FW.DougsShit = DougsShit = (function() {
-    function DougsShit() {
+    function DougsShit(position) {
       var attributes, uniforms;
+      this.position = position;
       this.dougsCrazyShit = [];
       this.startRotationSpeed = .02;
       this.endRotationSpeed = .005;
@@ -11,9 +12,9 @@
       this.zRotationEnd = 2 * Math.PI;
       this.startRadius = 5;
       this.endRadius = 50;
-      this.numLayers = 50;
+      this.numLayers = 30;
       this.startSegments = 20;
-      this.endSegments = 100;
+      this.endSegments = 50;
       this.width = 1;
       this.height = 1;
       this.squareGeo = new THREE.PlaneGeometry(1, 1);
@@ -58,20 +59,17 @@
       dougsCrazyGeometry = new THREE.Geometry();
       _results = [];
       for (i = _i = 1, _ref = this.numLayers; 1 <= _ref ? _i <= _ref : _i >= _ref; i = 1 <= _ref ? ++_i : --_i) {
-        console.log('wah');
         this.radius = map(i, 1, this.numLayers, this.startRadius, this.endRadius);
         this.numSegments = Math.floor(map(i, 1, this.numLayers, this.startSegments, this.endSegments));
         geoLayer = new THREE.CircleGeometry(this.radius, this.numSegments);
         layerMesh = new THREE.ParticleSystem(geoLayer, this.shaderMaterial);
-        layerMesh.position.z = -100;
-        layerMesh.position.y = 20;
+        layerMesh.position = this.position;
         FW.scene.add(layerMesh);
         layer = {
           mesh: layerMesh,
           rotationSpeed: map(i, 1, this.numLayers, this.startRotationSpeed, this.endRotationSpeed)
         };
-        this.dougsCrazyShit.push(layer);
-        _results.push(this.placeDoug());
+        _results.push(this.dougsCrazyShit.push(layer));
       }
       return _results;
     };
@@ -85,18 +83,6 @@
         _results.push(layer.mesh.rotation.z -= layer.rotationSpeed);
       }
       return _results;
-    };
-
-    DougsShit.prototype.placeDoug = function() {
-      var dougMesh, planeGeo, planeMat;
-      planeGeo = new THREE.PlaneGeometry(10, 10);
-      planeMat = new THREE.MeshBasicMaterial({
-        map: THREE.ImageUtils.loadTexture('assets/doug.jpg')
-      });
-      dougMesh = new THREE.Mesh(planeGeo, planeMat);
-      dougMesh.position.y = 20;
-      dougMesh.position.z = -98;
-      return FW.scene.add(dougMesh);
     };
 
     return DougsShit;

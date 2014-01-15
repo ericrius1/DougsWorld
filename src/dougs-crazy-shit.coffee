@@ -1,5 +1,5 @@
 FW.DougsShit = class DougsShit
-  constructor: ->
+  constructor: (@position)->
     @dougsCrazyShit = []
     @startRotationSpeed = .02
     @endRotationSpeed = .005
@@ -7,9 +7,9 @@ FW.DougsShit = class DougsShit
     @zRotationEnd = 2 * Math.PI
     @startRadius = 5
     @endRadius = 50
-    @numLayers = 50
+    @numLayers = 30
     @startSegments = 20
-    @endSegments = 100
+    @endSegments = 50
     @width = 1
     @height = 1
     @squareGeo = new THREE.PlaneGeometry(1, 1)
@@ -40,19 +40,16 @@ FW.DougsShit = class DougsShit
     dougsCrazyGeometry = new THREE.Geometry()
 
     for i in [1..@numLayers]
-      console.log 'wah'
       @radius = map(i, 1, @numLayers, @startRadius, @endRadius)
       @numSegments = Math.floor(map(i, 1, @numLayers, @startSegments, @endSegments))
       geoLayer = new THREE.CircleGeometry @radius, @numSegments
       layerMesh = new THREE.ParticleSystem geoLayer, @shaderMaterial
-      layerMesh.position.z = -100
-      layerMesh.position.y = 20
+      layerMesh.position = @position
       FW.scene.add layerMesh
       layer = 
         mesh: layerMesh
         rotationSpeed: map(i, 1, @numLayers, @startRotationSpeed, @endRotationSpeed)
       @dougsCrazyShit.push layer
-      @placeDoug()
 
 
 
@@ -61,13 +58,7 @@ FW.DougsShit = class DougsShit
     for layer in @dougsCrazyShit
       layer.mesh.rotation.z -= layer.rotationSpeed 
 
-  placeDoug: ->
-    planeGeo = new THREE.PlaneGeometry(10, 10)
-    planeMat = new THREE.MeshBasicMaterial map:THREE.ImageUtils.loadTexture('assets/doug.jpg')
-    dougMesh = new THREE.Mesh planeGeo, planeMat 
-    dougMesh.position.y = 20
-    dougMesh.position.z = -98
-    FW.scene.add dougMesh
+
 
 
 

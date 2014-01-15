@@ -35,7 +35,10 @@ FW.World = class World
     light2.position.set( 0, -1, -1);
     FW.scene.add( light2 );
 
-    @dougsShit = new FW.DougsShit()
+    #CAVES 
+    @caves = new FW.Caves()
+    #DOUGS SHIT
+    @dougsShit = new FW.DougsShit(@caves.positions[0])
 
     # WATER
     waterNormals = new THREE.ImageUtils.loadTexture './assets/waternormals.jpg'

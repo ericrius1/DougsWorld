@@ -9,7 +9,9 @@
       });
       this.initializeSpell();
       $('body')[0].on('mousedown', function() {
-        return _this.spellEmitter.enable();
+        _this.spellEmitter.enable();
+        _this.spellEmitter.position = FW.controls.getPosition();
+        return console.log(_this.spellEmitter.position);
       });
       $('body')[0].on('mouseup', function() {
         return _this.spellEmitter.disable();
@@ -20,7 +22,8 @@
     Wand.prototype.initializeSpell = function() {
       this.spellEmitter = new ShaderParticleEmitter({
         size: 100,
-        particlesPerSecond: 10
+        particlesPerSecond: 10,
+        position: new THREE.Vector3(100, 100, 100)
       });
       this.spellGroup.addEmitter(this.spellEmitter);
       return this.spellEmitter.disable();

@@ -8,6 +8,8 @@ FW.Wand = class Wand
     @initializeSpell()
     $('body')[0].on 'mousedown', =>
       @spellEmitter.enable()
+      @spellEmitter.position = FW.controls.getPosition()
+      console.log @spellEmitter.position
     $('body')[0].on 'mouseup', =>
       @spellEmitter.disable()
     FW.scene.add(@spellGroup.mesh)
@@ -16,6 +18,7 @@ FW.Wand = class Wand
     @spellEmitter = new ShaderParticleEmitter
       size: 100
       particlesPerSecond: 10
+      position: new THREE.Vector3(100, 100, 100)
 
     @spellGroup.addEmitter @spellEmitter
     @spellEmitter.disable()

@@ -7,7 +7,7 @@ FW.DougsShit = class DougsShit
     @zRotationEnd = 2 * Math.PI
     @startRadius = 5
     @endRadius = 50
-    @numLayers = 100
+    @numLayers = 40
     @startSegments = 20
     @endSegments = 50
     @width = 1
@@ -56,7 +56,7 @@ FW.DougsShit = class DougsShit
     
   update: ->
     for layer in @dougsCrazyShit
-      layer.mesh.rotation.z -= layer.rotationSpeed 
+      layer.mesh.rotation.z += layer.rotationSpeed 
 
 
 

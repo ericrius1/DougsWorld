@@ -12,7 +12,7 @@
       this.zRotationEnd = 2 * Math.PI;
       this.startRadius = 5;
       this.endRadius = 50;
-      this.numLayers = 100;
+      this.numLayers = 40;
       this.startSegments = 20;
       this.endSegments = 50;
       this.width = 1;
@@ -80,7 +80,7 @@
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         layer = _ref[_i];
-        _results.push(layer.mesh.rotation.z -= layer.rotationSpeed);
+        _results.push(layer.mesh.rotation.z += layer.rotationSpeed);
       }
       return _results;
     };

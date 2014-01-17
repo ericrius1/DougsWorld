@@ -27,6 +27,7 @@
       light2.position.set(0, -1, -1);
       FW.scene.add(light2);
       this.caves = new FW.Caves();
+      this.wand = new FW.Wand();
       this.dougsShit = new FW.DougsShit(this.caves.positions[0]);
       waterNormals = new THREE.ImageUtils.loadTexture('./assets/waternormals.jpg');
       waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
@@ -62,6 +63,7 @@
       this.water.material.uniforms.time.value += 1.0 / 60;
       FW.controls.update(Date.now() - this.time);
       this.dougsShit.update();
+      this.wand.update();
       this.time = Date.now();
       return this.render();
     };

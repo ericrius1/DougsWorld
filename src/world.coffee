@@ -37,6 +37,8 @@ FW.World = class World
 
     #CAVES 
     @caves = new FW.Caves()
+    #WAND
+    @wand = new FW.Wand()
     #DOUGS SHIT
     @dougsShit = new FW.DougsShit(@caves.positions[0])
 
@@ -78,6 +80,7 @@ FW.World = class World
     @water.material.uniforms.time.value += 1.0 / 60
     FW.controls.update(Date.now() - @time)
     @dougsShit.update()
+    @wand.update()
     @time = Date.now()
 
     @render()

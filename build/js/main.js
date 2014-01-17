@@ -1,6 +1,10 @@
 (function() {
   var Main;
 
+  window.$ = document.querySelectorAll.bind(document);
+
+  Element.prototype.on = Element.prototype.addEventListener;
+
   if (!Detector.webgl) {
     Detector.addGetWebGLMessage();
   }

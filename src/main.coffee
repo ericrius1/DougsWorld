@@ -1,3 +1,6 @@
+window.$ = document.querySelectorAll.bind(document)
+Element::on = Element::addEventListener
+
 
 if !Detector.webgl
    Detector.addGetWebGLMessage()
